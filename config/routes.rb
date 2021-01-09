@@ -5,8 +5,6 @@ Rails.application.routes.draw do
   # get '/' => 'home#index'
 
   # root_pathの設定(/のパス)
-  root to: 'home#index'
-
-  get '/about' => 'home#about'
+  root to: 'articles#index'
 
 end
