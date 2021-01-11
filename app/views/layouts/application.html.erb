@@ -4,6 +4,9 @@
     <title>BlogApp</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    
+    <%# fontawesomeの読み込み %>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -25,6 +28,16 @@
         </div>
       </div>
     </header>
+
+    <%# flashはハッシュになっている %>
+    <%# eachでハッシュのキーと値を取り出している %>
+    <% if flash.present? %>
+      <div class="flash">
+        <% flash.each do |key, value|%>
+          <div class="<%= key %>"><%= value %></div>
+        <% end %>
+      </div>
+    <% end %>
 
     <%= yield %>
     
