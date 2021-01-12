@@ -23,8 +23,25 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def edit
+    @article = Article.find(params[:id])
+  end
 
-  
+  def update
+    @article = Article.find(params[:id])
+
+    # 値が正常に渡ってきていたら
+    if @article.update(article_params)
+      redirect_to article_path(@article), notice: '更新できました'
+    else
+      flash.now[:error] = '更新できませんでした'
+      render :edit
+    end
+
+  end
+
+
+
   private
 
   # :titleと:contentの値を受け取るためのメソッド
@@ -32,5 +49,6 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :content)
   end
+
 
 end
