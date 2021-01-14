@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   root to: 'articles#index'
 
   # 色々なURLを生成する(今回はshowのみ使用)
-  resources :articles, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :articles
+  
+    # onlyオプション（指定のアクションのみ）
+      # resources :articles only: [:show, :new, :create, :edit, :update, :destroy]
 
 end
