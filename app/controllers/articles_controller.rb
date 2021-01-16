@@ -28,7 +28,6 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    
     # 値が正常に渡ってきていたら
     if @article.update(article_params)
       redirect_to article_path(@article), notice: '更新できました'
@@ -57,6 +56,4 @@ class ArticlesController < ApplicationController
   end
 
   # インスタンス変数はそのクラス内であれば自由にアクセスできる
-
-
 end
