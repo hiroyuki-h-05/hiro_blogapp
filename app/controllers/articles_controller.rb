@@ -1,6 +1,9 @@
 class ArticlesController < ApplicationController
 
   before_action :set_article, only: [:show, :edit, :update]
+
+  # devise(gem)が用意しているメソッドを使用
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   
   def index
     @articles = Article.all
