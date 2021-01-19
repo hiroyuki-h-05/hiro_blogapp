@@ -10,6 +10,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @comments = @article.comments
   end
 
   def new
@@ -22,9 +23,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-
     @article = current_user.articles.build(article_params)
-
     if @article.save
       redirect_to article_path(@article), notice: '保存しました'
     else
