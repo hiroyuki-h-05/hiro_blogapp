@@ -21,4 +21,22 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  # リレーション
+    # 複数形になっているがarticlesモデルのことを指している
+    # dependent: :destroyはuserが削除された時にarticleも削除するよという意
+  has_many :articles, dependent: :destroy
+
+
+  # インスタンスメソッド
+  def has_written?(article)
+    articles.exists?(id: article.id)
+  end
+
+  # cohki0305@gmail.com
+  def display_name
+    self.email.split('@').first # ['cohki0305', 'gmail.com']
+  end
+
+
 end

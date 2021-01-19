@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
 
-  before_action :set_article, only: [:show, :edit, :update]
+  before_action :set_article, only: [:show]
 
   # devise(gem)が用意しているメソッドを使用
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
@@ -13,12 +13,18 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    # 空のインスタンスをviewに渡してformの情報を埋め込む
-    @article = Article.new
+
+    # current_user(deviseのヘルパーメソッド)でユーザー情報を取得
+    # userに紐づいた空のarticleインスタンスを build で生成
+    # @articleに代入
+    @article = current_user.articles.build
+
   end
 
   def create
-    @article = Article.new(article_params)
+
+    @article = current_user.articles.build(article_params)
+
     if @article.save
       redirect_to article_path(@article), notice: '保存しました'
     else
@@ -28,10 +34,11 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @article = current_user.articles.find(params[:id])
   end
 
   def update
-    # 値が正常に渡ってきていたら
+    @article = cuttent_user.articles.find(params[:id])
     if @article.update(article_params)
       redirect_to article_path(@article), notice: '更新できました'
     else
@@ -41,7 +48,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    article = Article.find(params[:id])
+    article = current_user.articles.find(params[:id])
     article.destroy!
     redirect_to root_path, notice: '削除に成功しました'
   end
