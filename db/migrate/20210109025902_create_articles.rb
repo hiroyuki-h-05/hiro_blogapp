@@ -1,13 +1,10 @@
 class CreateArticles < ActiveRecord::Migration[6.1]
   def change
     create_table :articles do |t|
-
-      # string : 短い文字列,  text : 長い文字列
-      t.string :title
-      t.text :content
-
-      # データ作成日のカラム
-      t.timestamps
+      t.references :user, null: false  # 関連付け
+      t.string :title, null: false
+      t.text :content, null: false
+      t.timestamps  # データ作成日のカラム
     end
   end
 end
