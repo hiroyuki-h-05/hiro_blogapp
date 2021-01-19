@@ -8,10 +8,14 @@ Rails.application.routes.draw do
   # root_pathの設定(/のパス)
   root to: 'articles#index'
 
-  # 色々なURLを生成する(今回はshowのみ使用)
-  resources :articles
+  # URLの生成（入れ子構造になっている）
+  resources :articles do
+    resources :comments, only: [:new, :create]
+  end
   
-    # onlyオプション（指定のアクションのみ）
+  # onlyオプション（指定のアクションのみ）
       # resources :articles only: [:show, :new, :create, :edit, :update, :destroy]
+
+  
 
 end
