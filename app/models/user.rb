@@ -22,21 +22,46 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+
   # リレーション
     # 複数形になっているがarticlesモデルのことを指している
     # dependent: :destroyはuserが削除された時にarticleも削除するよという意
   has_many :articles, dependent: :destroy
+  has_one :profile, dependent: :destroy # 単数系で記述
 
+  # delegate
+  delegate :birthday, :age, :gender, to: :profile, allow_nil: true
+
+      # def birthday
+      #   profile&.birthday
+      # end
+
+      # def gender
+      #   profile&.gender
+      # end
 
   # インスタンスメソッド
   def has_written?(article)
     articles.exists?(id: article.id)
   end
 
-  # cohki0305@gmail.com
+  # ぼっち演算子で記述（こちらを使うと値がnilだったとしてもエラーが起こらない）
   def display_name
-    self.email.split('@').first # ['cohki0305', 'gmail.com']
+    # profileの値が存在すれば profile.nickname
+    profile&.nickname || self.email.split('@').first
   end
 
+  # profileがあるば値を取得、なければ空のプロフィールインスタンスを容易
+  def prepare_profile
+    profile || build_profile
+  end
+
+  def avatar_image
+    if profile&.avatar&.attached?
+      profile.avatar
+    else
+      'default-avatar.png'
+    end
+  end
 
 end
