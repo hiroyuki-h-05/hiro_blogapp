@@ -75,6 +75,7 @@ group :development do
 
   # erbをhamlに変換
   gem 'erb2haml'
+  
 end
 
 group :test do

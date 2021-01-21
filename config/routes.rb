@@ -12,10 +12,11 @@ Rails.application.routes.draw do
   resources :articles do
     resources :comments, only: [:new, :create]
   end
+
+  # userとprofileは1対1の関係なのでresourceと記述（indexページは必要ない）
+  resource :profile, only: [:show, :edit, :update]
   
   # onlyオプション（指定のアクションのみ）
       # resources :articles only: [:show, :new, :create, :edit, :update, :destroy]
-
-  
 
 end
