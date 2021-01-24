@@ -11,10 +11,14 @@ Rails.application.routes.draw do
   # URLの生成（入れ子構造になっている）
   resources :articles do
     resources :comments, only: [:new, :create]
+    resource :like, only: [:create, :destroy]
   end
 
   # userとprofileは1対1の関係なのでresourceと記述（indexページは必要ない）
   resource :profile, only: [:show, :edit, :update]
+
+  # いいね一覧
+  resources :favorites, only: [:index]
   
   # onlyオプション（指定のアクションのみ）
       # resources :articles only: [:show, :new, :create, :edit, :update, :destroy]

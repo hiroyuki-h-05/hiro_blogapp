@@ -7,7 +7,10 @@ ruby '2.6.5'
 gem 'rails', '~> 6.1.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+# gem 'sqlite3', '~> 1.4'
+
+# postgreSQLを使うためのライブラリ(day26)
+gem 'pg', '>= 0.18', '< 2.0'
 
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
@@ -45,22 +48,33 @@ gem 'binding_of_caller'
 # ログイン機能
 gem 'devise'
 
+# AWS S3との連携（簡単にアップロードできるようになる）
+gem 'aws-sdk-s3', require: false
+
+
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+
+# 開発環境で使うもの
 group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   # pry-byebugのインストール
-  gem 'pry-byebug'
+  gem 'pry-byebug' 
 
-  # lintツール（文法チェックツール）の導入
+  # lintツール（文法チェック)
   gem 'rubocop-rails'
+  
+  # 環境変数
+  gem 'dotenv-rails' 
+
 end
 
 group :development do

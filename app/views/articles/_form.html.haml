@@ -3,10 +3,17 @@
     - article.errors.full_messages.each do |message|
       %li= message
   = form_with(model: article, local: true) do |f|
+
+    %div
+      = f.label :eyecatch, 'アイキャッチ'
+    %div
+      = f.file_field :eyecatch
+      
     %div
       = f.label :title, 'タイトル'
     %div
       = f.text_field :title, class: 'text'
+      
     %div
       = f.label :content, '内容'
     %div
