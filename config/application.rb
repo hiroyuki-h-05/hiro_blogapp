@@ -11,10 +11,12 @@ module BlogApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-
     # dotenv関連
-    Bundler.require(*Rails.groups)
-    Dotenv::Railtie.load
+    # 開発環境かテスト環境の時のみ実行
+    if Rails.env.development? || Rails.env.test?
+      Bundler.require(*Rails.groups)
+      Dotenv::Railtie.load
+    end
 
     # Configuration for the application, engines, and railties goes here.
     #
