@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
+#  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  remember_created_at    :datetime
@@ -23,11 +23,21 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
+  ######################################################
   # リレーション
+  ######################################################
     # 複数形になっているがarticlesモデルのことを指している
     # dependent: :destroyはuserが削除された時にarticleも削除するよという意
   has_many :articles, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_one :profile, dependent: :destroy # 単数系で記述
+
+  # 特殊な記述 
+  # 中間テーブル(likes)を経由して記事を取得（user→like→article)
+  # fabvoritesはarticleのことだと明示
+  has_many :favorite_articles, through: :likes, source: :article
+
+  
 
   # delegate
   delegate :birthday, :age, :gender, to: :profile, allow_nil: true
@@ -40,14 +50,21 @@ class User < ApplicationRecord
       #   profile&.gender
       # end
 
+  #######################################################
   # インスタンスメソッド
+  #######################################################
+  
   def has_written?(article)
     articles.exists?(id: article.id)
   end
 
-  # ぼっち演算子で記述（こちらを使うと値がnilだったとしてもエラーが起こらない）
+  def has_liked?(article)
+    likes.exists?(article_id: article.id)
+  end
+
+  # ぼっち演算子(&.)で記述（こちらを使うと値がnilだったとしてもエラーが起こらない）
   def display_name
-    # profileの値が存在すれば profile.nickname
+    # 左の式がtrueなら左の式の値を返す、そうでないなら右の式を実行（||演算子）
     profile&.nickname || self.email.split('@').first
   end
 

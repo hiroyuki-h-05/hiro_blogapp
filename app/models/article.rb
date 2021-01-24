@@ -2,12 +2,12 @@
 #
 # Table name: articles
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  content    :text             not null
 #  title      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :integer          not null
+#  user_id    :bigint           not null
 #
 # Indexes
 #
@@ -15,6 +15,11 @@
 #
 class Article < ApplicationRecord
 
+  # ActiveStorageの設定
+  has_one_attached :eyecatch
+
+
+  # バリデーション
   validates :title, presence: true  # 値が存在するかどうか
   validates :title, length: { minimum: 2, maximum: 100 }  # 文字数
   validates :title, format: { with: /\A(?!\@)/ }  # 正規表現
@@ -22,12 +27,13 @@ class Article < ApplicationRecord
   validates :content, length: { minimum: 10 }
   validates :content, uniqueness: true
 
-  # 独自のルール
-  # validate :validate_title_and_content_length
+    # 独自ルールを設定したい時
+    # validate :validate_title_and_content_length
 
 
   # リレーション
   has_many :comments, dependent: :destroy  # has_manyの場合は複数
+  has_many :likes, dependent: :destroy
   belongs_to :user        # belongs_toの場合は単数系
 
   
@@ -39,6 +45,10 @@ class Article < ApplicationRecord
   # 投稿者の名前を取得
   def author_name
     user.display_name
+  end
+
+  def like_count
+    likes.count
   end
 
   private

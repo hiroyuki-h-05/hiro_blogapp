@@ -10,23 +10,33 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body
+    -# ヘッダー
     %header.header
       .header_logos
-        - if !current_page?(root_path)
+
+        -# 指定したURLが、現在表示されているかチェック
+        - if !current_page?(root_path) # 現在のページがroot_pathでなければ
           = link_to :back do
             = image_tag 'back.svg', class: 'header_back'
-        %p.header_pageTitle BlogApp
+        %p.header_pageTitle
+          = link_to 'BlogApp', root_path
 
+      -# ログイン時の表示とそうでない時の表示
       - if user_signed_in?
         .dropdown
           = image_tag current_user.avatar_image, class: 'header_avatar dropbtn'
           .dropdown-content
             = link_to 'プロフィール', profile_path
+            = link_to 'お気に入り', favorites_path
             = link_to 'ログアウト', destroy_user_session_path, data: {method: 'delete'}
       - else
         = link_to 'ログイン', new_user_session_path, class: 'header_loginBtn'
+
+    -# フラッシュ
     - if flash.present?
       .flash
         - flash.each do |key, value|
           %div{:class => key}= value
+
+    -# 共通部分
     = yield
