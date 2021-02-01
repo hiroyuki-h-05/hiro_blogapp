@@ -35,9 +35,22 @@ class User < ApplicationRecord
   # 中間テーブル(likes)を経由して記事を取得（user→like→article)
   # fabvorites_articlesは関連名
   # sourceは  Likeモデルのarticle_id  のことを指す
-  has_many :favorite_articles, through: :likes, source: :article
   has_many :likes, dependent: :destroy
+  has_many :favorite_articles, through: :likes, source: :article
+
+
+  # 自分がフォローしている相手を探す
   
+      has_many :following_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
+
+      # following_relationshipsテーブルのfollower_id（自分のid）を経由し、following_id（フォロー対象）の情報を取得
+      has_many :followings, through: :following_relationships, source: :following
+
+  # フォロワーを探す
+
+      has_many :follower_relationships, class_name: 'Relationship', foreign_key: 'following_id', dependent: :destroy
+      has_many :followers, through: :follower_relationships, source: :follower                                            # フォロワーの情報を取得するための記述
+
 
   
 
@@ -74,6 +87,18 @@ class User < ApplicationRecord
   # profileがあるば値を取得、なければ空のプロフィールインスタンスを容易
   def prepare_profile
     profile || build_profile
+  end
+
+  # フォローするためのメソッド
+  # 自分（follwer_id）が紐づいたインスタンスをもとに生成。
+  # 引数にはフォローしたいユーザーのインスタンスを渡す。
+  def follow!(user)
+    following_relationships.create!(following_id: user.id)
+  end
+
+  def unfollow!(user)
+    relation = following_relationships.find_by!(following_id: user.id)
+    relation.destroy!
   end
 
   def avatar_image
