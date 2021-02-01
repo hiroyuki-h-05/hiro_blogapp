@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     resource :like, only: [:create, :destroy]
   end
 
+  resources :accounts, only: [:show]
+
   # userとprofileは1対1の関係なのでresourceと記述（indexページは必要ない）
   resource :profile, only: [:show, :edit, :update]
 
