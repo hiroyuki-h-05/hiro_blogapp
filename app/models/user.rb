@@ -29,13 +29,15 @@ class User < ApplicationRecord
     # 複数形になっているがarticlesモデルのことを指している
     # dependent: :destroyはuserが削除された時にarticleも削除するよという意
   has_many :articles, dependent: :destroy
-  has_many :likes, dependent: :destroy
   has_one :profile, dependent: :destroy # 単数系で記述
 
-  # 特殊な記述 
+  
   # 中間テーブル(likes)を経由して記事を取得（user→like→article)
-  # fabvoritesはarticleのことだと明示
+  # fabvorites_articlesは関連名
+  # sourceは  Likeモデルのarticle_id  のことを指す
   has_many :favorite_articles, through: :likes, source: :article
+  has_many :likes, dependent: :destroy
+  
 
   
 
@@ -59,6 +61,7 @@ class User < ApplicationRecord
   end
 
   def has_liked?(article)
+    # current_userのいいねの中に、article_idが引数で渡されたインスタンスのidをもついいねが存在するか
     likes.exists?(article_id: article.id)
   end
 

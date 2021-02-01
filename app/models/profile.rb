@@ -19,10 +19,12 @@
 class Profile < ApplicationRecord
 
   enum gender: { male: 0, female: 1, other: 2 } # 性別の定義付け
+  
   belongs_to :user
 
   # プロフィールに仮想のavatarカラムを追加
   has_one_attached :avatar
+
 
   def age
     return '不明' unless birthday.present?

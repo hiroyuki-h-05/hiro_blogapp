@@ -3,7 +3,6 @@
 # Table name: articles
 #
 #  id         :bigint           not null, primary key
-#  content    :text             not null
 #  title      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -18,14 +17,19 @@ class Article < ApplicationRecord
   # ActiveStorageの設定
   has_one_attached :eyecatch
 
+  # ActionTextの設定
+  has_rich_text :content
+    # action_text_rich_textsテーブルにテキスト情報を保存することになるので
+    # articlesテーブルのcontentカラムは必要なくなる
+
 
   # バリデーション
   validates :title, presence: true  # 値が存在するかどうか
   validates :title, length: { minimum: 2, maximum: 100 }  # 文字数
   validates :title, format: { with: /\A(?!\@)/ }  # 正規表現
   validates :content, presence: true
-  validates :content, length: { minimum: 10 }
-  validates :content, uniqueness: true
+  # validates :content, length: { minimum: 10 }
+  # validates :content, uniqueness: true
 
     # 独自ルールを設定したい時
     # validate :validate_title_and_content_length

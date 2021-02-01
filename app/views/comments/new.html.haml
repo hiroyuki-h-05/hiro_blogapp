@@ -3,6 +3,7 @@
     - @comment.errors.full_messages.each do |message|
       %li= message
 
+  -# 重要 @comment.article  day22-3
   = form_with(model: @comment, url: article_comments_path(@comment.article), local: true) do |f|
     %div
       = f.label :content, '内容'
