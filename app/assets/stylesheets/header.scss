@@ -11,7 +11,7 @@ $back-icon-size: 16px;
   padding: $header-padding-y 16px;
   font-weight: bold;
 
-  &_loginBtn {
+  a.header_loginBtn {
     background-color: $base-bg-color;
     height: $avatar-size;
     border-radius: 8px;
