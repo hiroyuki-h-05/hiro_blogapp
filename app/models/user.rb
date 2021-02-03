@@ -71,11 +71,6 @@ class User < ApplicationRecord
     likes.exists?(article_id: article.id)
   end
 
-  # ぼっち演算子(&.)で記述（こちらを使うと値がnilだったとしてもエラーが起こらない）
-  def display_name
-    # 左の式がtrueなら左の式の値を返す、そうでないなら右の式を実行（||演算子）
-    profile&.nickname || self.email.split('@').first
-  end
 
   # profileがあるば値を取得、なければ空のプロフィールインスタンスを容易
   def prepare_profile
@@ -98,14 +93,6 @@ class User < ApplicationRecord
 
   def has_followed?(user)
     following_relationships.exists?(following_id: user.id)
-  end
-
-  def avatar_image
-    if profile&.avatar&.attached?
-      profile.avatar
-    else
-      'default-avatar.png'
-    end
   end
 
   private
