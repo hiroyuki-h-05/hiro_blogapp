@@ -23,51 +23,44 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
-  ######################################################
   # リレーション
-  ######################################################
-    # 複数形になっているがarticlesモデルのことを指している
-    # dependent: :destroyはuserが削除された時にarticleも削除するよという意
-  has_many :articles, dependent: :destroy
+  
+  # has_manyの関連名は複数形。articlesモデルのことを指している。
+  has_many :articles, dependent: :destroy # Userモデルのインスタンスが削除されたときに関連づいたモデルのインスタンスも削除するための記述
   has_one :profile, dependent: :destroy # 単数系で記述
 
   
   # 中間テーブル(likes)を経由して記事を取得（user→like→article)
   # fabvorites_articlesは関連名
-  # sourceは  Likeモデルのarticle_id  のことを指す
   has_many :likes, dependent: :destroy
-  has_many :favorite_articles, through: :likes, source: :article
+  has_many :favorite_articles, through: :likes, source: :article # sourceは  Likeモデルのarticle_id  のことを指す
 
 
   # 自分がフォローしている相手を探す
   
-      has_many :following_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
+    has_many :following_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
 
-      # following_relationshipsテーブルのfollower_id（自分のid）を経由し、following_id（フォロー対象）の情報を取得
-      has_many :followings, through: :following_relationships, source: :following
+    # following_relationshipsテーブルのfollower_id（自分のid）を経由し、following_id（フォロー対象）の情報を取得
+    has_many :followings, through: :following_relationships, source: :following
 
   # フォロワーを探す
 
-      has_many :follower_relationships, class_name: 'Relationship', foreign_key: 'following_id', dependent: :destroy
-      has_many :followers, through: :follower_relationships, source: :follower                                            # フォロワーの情報を取得するための記述
-
-
-  
+    has_many :follower_relationships, class_name: 'Relationship', foreign_key: 'following_id', dependent: :destroy
+    has_many :followers, through: :follower_relationships, source: :follower                                            # フォロワーの情報を取得するための記述
 
   # delegate
-  delegate :birthday, :age, :gender, to: :profile, allow_nil: true
 
-      # def birthday
-      #   profile&.birthday
-      # end
+    delegate :birthday, :age, :gender, to: :profile, allow_nil: true
 
-      # def gender
-      #   profile&.gender
-      # end
+        # def birthday
+        #   profile&.birthday
+        # end
 
-  #######################################################
+        # def gender
+        #   profile&.gender
+        # end
+
   # インスタンスメソッド
-  #######################################################
   
   def has_written?(article)
     articles.exists?(id: article.id)
@@ -93,12 +86,18 @@ class User < ApplicationRecord
   # 自分（follwer_id）が紐づいたインスタンスをもとに生成。
   # 引数にはフォローしたいユーザーのインスタンスを渡す。
   def follow!(user)
-    following_relationships.create!(following_id: user.id)
+    user_id = get_user_id(user)
+    following_relationships.create!(following_id: user_id)
   end
 
   def unfollow!(user)
-    relation = following_relationships.find_by!(following_id: user.id)
+    user_id = get_user_id(user)
+    relation = following_relationships.find_by!(following_id: user_id)
     relation.destroy!
+  end
+
+  def has_followed?(user)
+    following_relationships.exists?(following_id: user.id)
   end
 
   def avatar_image
@@ -109,4 +108,13 @@ class User < ApplicationRecord
     end
   end
 
+  private
+
+  def get_user_id(user)
+    if user.is_a?(User)
+      user.id
+    else
+      user
+    end
+  end
 end

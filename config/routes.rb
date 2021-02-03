@@ -14,13 +14,16 @@ Rails.application.routes.draw do
     resource :like, only: [:create, :destroy]
   end
 
-  resources :accounts, only: [:show]
+  # ユーザーごとのアカウント詳細ページ
+  resources :accounts, only: [:show] do
+    resources :follows, only: [:create]
+    resources :unfollows, only: [:create]
+  end
 
-  # userとprofileは1対1の関係なのでresourceと記述（indexページは必要ない）
+  # indexページやパスに渡すid必要性もないのでuserとprofileは1対1の関係なのでresourceと記述（indexページは必要ない）
   resource :profile, only: [:show, :edit, :update]
 
-  # day25-4
-  # いいね一覧
+  # いいね一覧 (中級編 day25-4)
   resources :favorites, only: [:index]
-
+  
 end
