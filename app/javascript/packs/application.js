@@ -14,19 +14,3 @@ ActiveStorage.start()
 
 require("trix")
 require("@rails/actiontext")
-
-// jqueryの読み込み
-import $ from 'jquery'
-// axiosの読み込み
-import axios from 'axios'
-
-
-// ターボリンク(Railsの機能)があるのでDOMContentLoadedはつかわずturbolinks:loadを使用
-document.addEventListener('turbolinks:load', () => {
-  $('.article_title').on('click', () => {
-    axios.get('/')
-      .then((response) => {
-        console.log(response)
-      })
-  })
-})

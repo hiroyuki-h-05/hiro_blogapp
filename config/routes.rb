@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # URLの生成（入れ子構造になっている）
   resources :articles do
     resources :comments, only: [:new, :create]
-    resource :like, only: [:create, :destroy]
+    resource :like, only: [:show, :create, :destroy]
   end
 
   # ユーザーごとのアカウント詳細ページと、それに関するフォロー・アンフォロー
