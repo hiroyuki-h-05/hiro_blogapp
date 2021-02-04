@@ -41,6 +41,8 @@ gem 'hamlit'
 # データベースの構造（schame スキーマ）をメモする機能
 gem 'annotate'
 
+gem 'active_decorator'
+
 # エラー関連
 gem 'better_errors'
 gem 'binding_of_caller'
