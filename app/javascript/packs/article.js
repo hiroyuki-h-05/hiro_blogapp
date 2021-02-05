@@ -18,23 +18,59 @@ const handleHeartDisplay = (hasLiked) => {
   }
 }
 
+// コメントフォームの表示
+const handleCommentForm = () => {
+  $('.show-comment-form').on('click', () => {
+    $('.show-comment-form').addClass('hidden')
+    $('.comment-text-area').removeClass('hidden')
+  })
+}
+
+// コメント追加
+const appendNewComment = (comment) => {
+  $('.comments-container').append(
+    `<div class='article_comment'><p>${comment.content}</p></div>`
+  )
+}
+
 
 // ターボリンク(Railsの機能)があるのでD0MContentLoadedはつかわずturbolinks:loadを使用
 document.addEventListener('DOMContentLoaded', () => {
   const dataset = $('#article-show').data()
   const articleId = dataset.articleId
 
+  // コメント表示(Ajax)
   axios.get(`/articles/${articleId}/comments`)
     .then((response) => {
       const comments = response.data
 
       comments.forEach((comment) => {
-        $('.comments-container').append(
-          `<div class='article_comment'><p>${comment.content}</p></div>`
-        )
+        appendNewComment(comment)
       })
     })
 
+  handleCommentForm()
+  
+  // Ajaxでコメント投稿
+  $('.add-comment-button').on('click', () => {
+    const content = $('#comment_content').val()
+    if (!content) {
+      window.alert('コメントを入力してください')
+    } else {
+      // 第二引数に送信するパラメーターを指定
+      axios.post(`/articles/${articleId}/comments`, {
+        comment: {content: content}
+      })
+      
+        .then((res) => {
+          const comment = res.data
+          appendNewComment(comment)
+          $('#comment_content').val('')
+        })
+    }
+  })
+
+  // いいねしたかどうを
   axios.get(`/articles/${articleId}/like`)
     .then((response) => {
       const hasLiked = response.data.hasLiked

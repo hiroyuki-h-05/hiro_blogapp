@@ -14,24 +14,17 @@ class CommentsController < ApplicationController
 
   def create
 
-    # ルーティングから:aricle_idの値をparamsで取得
     article = Article.find(params[:article_id])
-
-    # paramsで取得した:article_idの値をもったコメントインスタンスにcomment_paramsの値を渡してbuild
     @comment = article.comments.build(comment_params)
+    @comment.save
 
-    if @comment.save
-      redirect_to article_path(article), notice: 'コメントを追加しました'
-    else
-      flash.now[:error] = '更新できませんでした'
-      render :new
-    end
+    render json: @comment
   end
 
   private
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:content) # {comment: {content: '~~~~`}}
   end
 
 end
