@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
   # privateで定義
   before_action :set_article, only: [:show]
 
-  # devise(gem)が用意しているメソッド(authenticate_user)を使用
+  # authenticate_user! (deviseのメソッド)
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   
   def index
@@ -15,9 +15,7 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    # current_user(deviseのヘルパーメソッド)でユーザー情報を取得
-    # userに紐づいた空のarticleインスタンスを build で生成
-    # @articleに代入
+    # userに紐づいた空のarticleインスタンスをbuildで生成
     @article = current_user.articles.build
   end
 

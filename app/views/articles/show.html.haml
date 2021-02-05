@@ -19,10 +19,11 @@
   .article_content
     = @article.content
 
+  -# いいねボタン
   - if user_signed_in?
-    .article_heart.hidden.active-heart
+    .article_heart.active-heart.hidden
       = image_tag 'heart-active.svg'
-    .article_heart.hidden.inactive-heart
+    .article_heart.inactive-heart.hidden
       = image_tag 'heart.svg'
 
 .article
