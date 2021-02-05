@@ -20,7 +20,7 @@ const handleHeartDisplay = (hasLiked) => {
 
 
 // ターボリンク(Railsの機能)があるのでD0MContentLoadedはつかわずturbolinks:loadを使用
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const dataset = $('#article-show').data()
   const articleId = dataset.articleId
 
