@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   # URLの生成（入れ子構造になっている）
   resources :articles do
-    resources :comments, only: [:new, :create]
+    resources :comments, only: [:index, :new, :create]
     resource :like, only: [:show, :create, :destroy]
   end
 

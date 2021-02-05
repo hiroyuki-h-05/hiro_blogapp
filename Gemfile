@@ -50,6 +50,8 @@ gem 'binding_of_caller'
 # ログイン機能
 gem 'devise'
 
+gem 'active_model_serializers'
+
 # AWS S3との連携（簡単にアップロードできるようになる）
 gem 'aws-sdk-s3', require: false
 
