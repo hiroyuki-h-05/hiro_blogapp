@@ -3,13 +3,8 @@
 import $ from 'jquery'
 
 // axiosの読み込み
-import axios from 'axios'
-
-// rails-ujs（ライブラリ）で鍵を持たせる
-import { csrfToken } from 'rails-ujs'
-// axiosでリクエストを送る際に、鍵をつけた状態で送る
-axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
-
+import axios from 'modules/axios'
+import { listenActiveHeartEvent, listenInactiveHeartEvent } from '../modules/handle_heart'
 
 // ハートの表示をコントロールするファンクション
 const handleHeartDisplay = (hasLiked) => {
@@ -34,6 +29,7 @@ const appendNewComment = (comment) => {
     `<div class='article_comment'><p>${comment.content}</p></div>`
   )
 }
+
 
 
 // ターボリンク(Railsの機能)があるのでD0MContentLoadedはつかわずturbolinks:loadを使用
@@ -79,34 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
       handleHeartDisplay(hasLiked)
     })
 
-  // いいねのクリックイベント
-  $('.inactive-heart').on('click', () => {
-    axios.post(`/articles/${articleId}/like`)
-      .then((response) => {
-        if (response.data.status === 'ok') {
-          $('.active-heart').removeClass('hidden')
-          $('.inactive-heart').addClass('hidden')
-        }
-      })
-      .catch((e) => {
-        window.alert('Error')
-        console.log(e)
-      })
-  })
+  listenInactiveHeartEvent(articleId) // いいねのクリックイベント
+  listenActiveHeartEvent(articleId) // いいねを外すクリックイベント
 
-  // いいねを外すクリックイベント
-  $('.active-heart').on('click', () => {
-    axios.delete(`/articles/${articleId}/like`)
-      .then((response) => {
-        if (response.data.status === 'ok') {
-          $('.active-heart').addClass('hidden')
-          $('.inactive-heart').removeClass('hidden')
-        }
-      })
-      .catch((e) => {
-        window.alert('Error')
-        console.log(e)
-      })
-  })
+  
   
 })
