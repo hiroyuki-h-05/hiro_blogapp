@@ -1,6 +1,7 @@
 
 // jqueryの読み込み
 import $ from 'jquery'
+
 // axiosの読み込み
 import axios from 'axios'
 
@@ -8,6 +9,7 @@ import axios from 'axios'
 import { csrfToken } from 'rails-ujs'
 // axiosでリクエストを送る際に、鍵をつけた状態で送る
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
+
 
 // ハートの表示をコントロールするファンクション
 const handleHeartDisplay = (hasLiked) => {
@@ -70,13 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  // いいねしたかどうを
+  // いいねしたかどうかを判定し、true or falseによってクラスの付与を分岐
   axios.get(`/articles/${articleId}/like`)
     .then((response) => {
       const hasLiked = response.data.hasLiked
       handleHeartDisplay(hasLiked)
     })
 
+  // いいねのクリックイベント
   $('.inactive-heart').on('click', () => {
     axios.post(`/articles/${articleId}/like`)
       .then((response) => {
@@ -91,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
   })
 
+  // いいねを外すクリックイベント
   $('.active-heart').on('click', () => {
     axios.delete(`/articles/${articleId}/like`)
       .then((response) => {

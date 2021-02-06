@@ -29,31 +29,19 @@ gem 'jbuilder', '~> 2.7'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
+
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# ダミーデータを生成できる
-gem 'faker'
-
-# hamlの導入
-gem 'hamlit'
-
-# データベースの構造（schame スキーマ）をメモする機能
-gem 'annotate'
-
+gem 'faker' # ダミーデータを生成できる
+gem 'hamlit' # haml
+gem 'annotate' # データベースの構造（schame スキーマ）をメモする機能
 gem 'active_decorator'
-
-# エラー関連
-gem 'better_errors'
-gem 'binding_of_caller'
-
-# ログイン機能
-gem 'devise'
-
+gem 'better_errors' # エラー
+gem 'binding_of_caller' # エラー
+gem 'devise' # ログイン機能
 gem 'active_model_serializers'
-
-# AWS S3との連携（簡単にアップロードできるようになる）
-gem 'aws-sdk-s3', require: false
+gem 'aws-sdk-s3', require: false # AWS S3との連携（簡単にアップロードできるようになる）
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
@@ -68,14 +56,9 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
-  # pry-byebugのインストール
-  gem 'pry-byebug' 
-
-  # lintツール（文法チェック)
-  gem 'rubocop-rails'
-  
-  # 環境変数
-  gem 'dotenv-rails' 
+  gem 'pry-byebug' # pry-byebugのインストール
+  gem 'rubocop-rails' # lintツール（文法チェック)
+  gem 'dotenv-rails' # 環境変数
 
 end
 

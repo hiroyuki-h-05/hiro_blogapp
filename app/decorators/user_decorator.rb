@@ -2,10 +2,8 @@
 
 module UserDecorator
 
-  # ぼっち演算子(&.)で記述（こちらを使うと値がnilだったとしてもエラーが起こらない）
   def display_name
-    # 左の式がtrueなら左の式の値を返す、そうでないなら右の式を実行（||演算子）
-    profile&.nickname || self.email.split('@').first
+    profile&.nickname || self.email.split('@').first # ||演算子とぼっち演算子
   end
 
   def avatar_image

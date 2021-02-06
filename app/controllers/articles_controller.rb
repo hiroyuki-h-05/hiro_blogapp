@@ -1,9 +1,6 @@
 class ArticlesController < ApplicationController
 
-  # privateで定義
   before_action :set_article, only: [:show]
-
-  # authenticate_user! (deviseのメソッド)
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   
   def index
@@ -50,8 +47,6 @@ class ArticlesController < ApplicationController
 
   private
 
-  # :titleと:contentの値を受け取るためのメソッド
-  # 更新する対象のモデルの名前をつける
   def article_params
     params.require(:article).permit(:title, :content, :eyecatch)
   end
@@ -59,7 +54,5 @@ class ArticlesController < ApplicationController
   def set_article
     @article = Article.find(params[:id])
   end
-
-  # インスタンス変数はそのクラス内であれば自由にアクセスできる
 
 end
