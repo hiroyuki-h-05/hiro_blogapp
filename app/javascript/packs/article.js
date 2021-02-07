@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
   axios.get(`/articles/${articleId}/comments`)
     .then((response) => {
       const comments = response.data
-
       comments.forEach((comment) => {
         appendNewComment(comment)
       })
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const hasLiked = response.data.hasLiked
       handleHeartDisplay(hasLiked)
     })
-
+    
   listenInactiveHeartEvent(articleId) // いいねのクリックイベント
   listenActiveHeartEvent(articleId) // いいねを外すクリックイベント
 

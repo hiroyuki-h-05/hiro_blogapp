@@ -59,6 +59,8 @@ group :development, :test do
   gem 'pry-byebug' # pry-byebugのインストール
   gem 'rubocop-rails' # lintツール（文法チェック)
   gem 'dotenv-rails' # 環境変数
+  gem 'letter_opener'
+  gem 'letter_opener_web', '~> 1.0'
 
 end
 
