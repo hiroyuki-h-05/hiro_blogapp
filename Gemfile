@@ -42,6 +42,7 @@ gem 'binding_of_caller' # エラー
 gem 'devise' # ログイン機能
 gem 'active_model_serializers'
 gem 'aws-sdk-s3', require: false # AWS S3との連携（簡単にアップロードできるようになる）
+gem 'sidekiq'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'

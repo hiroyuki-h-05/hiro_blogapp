@@ -1,4 +1,8 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+
+  mount Sidekiq::Web => '/sidekiq' if Rails.env.development?
 
   # dev環境であればat以下のURLでLetterOpenerwebの内容が見れるようになるという設定
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
