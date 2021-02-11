@@ -22,12 +22,12 @@ class Relationship < ApplicationRecord
   belongs_to :follower, class_name: 'User'
   belongs_to :following, class_name: 'User'
 
-  # コールバックとメール送信
-  # インスタンスが生成された後に実行
+  # コールバック(ActiveRecord)
   after_create :send_email
 
   private
-  
+
+  # 非同期でメールを送信
   def send_email
     RelationshipMailer.new_follower(following, follower).deliver_later # 非同期でメール送信
   end
