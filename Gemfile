@@ -42,6 +42,7 @@ gem 'binding_of_caller' # エラー
 gem 'devise' # ログイン機能
 gem 'active_model_serializers'
 gem 'aws-sdk-s3', require: false # AWS S3との連携（簡単にアップロードできるようになる）
+gem 'sidekiq'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
@@ -59,6 +60,8 @@ group :development, :test do
   gem 'pry-byebug' # pry-byebugのインストール
   gem 'rubocop-rails' # lintツール（文法チェック)
   gem 'dotenv-rails' # 環境変数
+  gem 'letter_opener'
+  gem 'letter_opener_web', '~> 1.0'
 
 end
 

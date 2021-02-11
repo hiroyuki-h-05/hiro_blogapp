@@ -1,4 +1,4 @@
-// axiosの読み込み
+// ライブラリの読み込み
 import axios from 'axios'
 
 // rails-ujs（ライブラリ）で鍵を持たせる

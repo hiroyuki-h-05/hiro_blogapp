@@ -1,0 +1,8 @@
+%p #{@user.email} さん
+%p 以下のユーザにフォローされました。
+
+= link_to 'プロフィールを確認する', account_url(@follower)
+
+-# 外部からアクセスするにはurlの方で指定
+-# users_path => '/users'
+-# users_url => 'http://localhost:3000/users'
