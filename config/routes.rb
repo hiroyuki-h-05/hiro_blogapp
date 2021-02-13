@@ -25,14 +25,14 @@ Rails.application.routes.draw do
     resources :unfollows, only: [:create]
   end
 
-  # ログインユーザに関するルーティング
+  # ログインユーザ用のルーティング
   scope module: :apps do
-    # indexページやパスに渡すid必要性もないのでuserとprofileは1対1の関係なのでresourceと記述（indexページは必要ない）
     resources :favorites, only: [:index] # いいね一覧 (中級編 day25-4)
     resource :profile, only: [:show, :edit, :update]
     resource :timeline, only: [:show]
   end
 
+  # APIに関するアクションのルーティング
   namespace :api, defaults: {format: :json} do
     scope '/articles/:article_id' do
       resources :comments, only: [:index, :new, :create]
