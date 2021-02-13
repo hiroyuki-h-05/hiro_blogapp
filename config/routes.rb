@@ -17,10 +17,7 @@ Rails.application.routes.draw do
   root to: 'articles#index'
 
   # URLの生成（入れ子構造になっている）
-  resources :articles do
-    resources :comments, only: [:index, :new, :create]
-    resource :like, only: [:show, :create, :destroy]
-  end
+  resources :articles
 
   # ユーザーごとのアカウント詳細ページと、それに関するフォロー・アンフォロー
   resources :accounts, only: [:show] do
@@ -28,12 +25,19 @@ Rails.application.routes.draw do
     resources :unfollows, only: [:create]
   end
 
-  resource :timeline, only: [:show]
+  # ログインユーザ用のルーティング
+  scope module: :apps do
+    resources :favorites, only: [:index] # いいね一覧 (中級編 day25-4)
+    resource :profile, only: [:show, :edit, :update]
+    resource :timeline, only: [:show]
+  end
 
-  # indexページやパスに渡すid必要性もないのでuserとprofileは1対1の関係なのでresourceと記述（indexページは必要ない）
-  resource :profile, only: [:show, :edit, :update]
-
-  # いいね一覧 (中級編 day25-4)
-  resources :favorites, only: [:index]
+  # APIに関するアクションのルーティング
+  namespace :api, defaults: {format: :json} do
+    scope '/articles/:article_id' do
+      resources :comments, only: [:index, :new, :create]
+      resource :like, only: [:show, :create, :destroy]
+    end
+  end
   
 end

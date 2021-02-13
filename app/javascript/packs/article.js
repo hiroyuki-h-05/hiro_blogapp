@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const articleId = dataset.articleId
 
   // コメント表示(Ajax)
-  axios.get(`/articles/${articleId}/comments`)
+  axios.get(`/api/articles/${articleId}/comments`)
     .then((response) => {
       const comments = response.data
       comments.forEach((comment) => {
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.alert('コメントを入力してください')
     } else {
       // 第二引数に送信するパラメーターを指定
-      axios.post(`/articles/${articleId}/comments`, {
+      axios.post(`/api/articles/${articleId}/comments`, {
         comment: {content: content}
       })
       
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // いいねしたかどうかを判定し、true or falseによってクラスの付与を分岐
-  axios.get(`/articles/${articleId}/like`)
+  axios.get(`/api/articles/${articleId}/like`)
     .then((response) => {
       const hasLiked = response.data.hasLiked
       handleHeartDisplay(hasLiked)
