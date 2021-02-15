@@ -62,5 +62,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+
+  # Factory Botのメソッドを読み込む
   config.include FactoryBot::Syntax::Methods
+
+  # request specに対して読み込み
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end
