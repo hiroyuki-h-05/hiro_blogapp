@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'faker' # ダミーデータを生成できる
+gem 'faker' # ダミーデータ
 gem 'hamlit' # haml
 gem 'annotate' # データベースの構造（schame スキーマ）をメモする機能
 gem 'active_decorator'
@@ -42,7 +42,7 @@ gem 'binding_of_caller' # エラー
 gem 'devise' # ログイン機能
 gem 'active_model_serializers'
 gem 'aws-sdk-s3', require: false # AWS S3との連携（簡単にアップロードできるようになる）
-gem 'sidekiq'
+gem 'sidekiq' # worker
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
@@ -51,7 +51,6 @@ gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 
-# 開発環境で使うもの
 group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -63,7 +62,7 @@ group :development, :test do
   gem 'letter_opener'
   gem 'letter_opener_web', '~> 1.0'
   gem 'rspec-rails' # テスト
-  gem 'factory_bot_rails' # ダミーデータ
+  gem 'factory_bot_rails' # ダミーデータ(テスト)
 
 end
 
