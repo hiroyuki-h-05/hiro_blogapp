@@ -68,4 +68,6 @@ RSpec.configure do |config|
 
   # request specに対して読み込み
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :system
+
 end
